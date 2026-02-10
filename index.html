@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>backdoor</title>
+  <meta name="description" content="Backdoor — an offensive security and systems research community." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #020202;
+      --bg-soft: #070707;
+      --fg: #f2f2f2;
+      --muted: #9b9b9b;
+      --line: #151515;
+      --accent: #ffffff;
+      --green: #7CFF9B;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Inter', system-ui, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body { overflow-x: hidden; }
+
+    /* noise layer */
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.03"/></svg>');
+    }
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: radial-gradient(circle at center, #090909 0%, #020202 65%);
+      position: relative;
+    }
+
+    h1 {
+      font-size: clamp(4rem, 13vw, 11rem);
+      font-weight: 800;
+      letter-spacing: -0.07em;
+      opacity: 0;
+      transform: translateY(60px);
+      animation: intro 1.8s cubic-bezier(.2,.6,.2,1) forwards;
+    }
+
+    .subtitle {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: intro 1.8s cubic-bezier(.2,.6,.2,1) forwards;
+      animation-delay: 0.4s;
+    }
+
+    .terminal {
+      margin-top: 3rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #050505, #020202);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .terminal-scan {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      mix-blend-mode: overlay;
+      animation: scanmove 6s linear infinite;
+    }
+
+    @keyframes scanmove {
+      from { background-position: 0 0; }
+      to { background-position: 0 100%; }
+    }
+
+    .terminal-body {
+      letter-spacing: 0.02em;
+    }
+
+    /* you are supposed to read the source */
+
+    .terminal-header {
+      padding: 0.6rem 1rem;
+      font-size: 0.75rem;
+      background: #0a0a0a;
+      border-bottom: 1px solid var(--line);
+      color: #bdbdbd;
+    }
+
+    .terminal-body {
+      padding: 1.2rem;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: #e6e6e6;
+      white-space: pre-wrap;
+    }
+
+    .cmd { color: var(--green); }
+
+    section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 8rem 2rem;
+      border-top: 1px solid var(--line);
+    }
+
+    section.alt { background: var(--bg-soft); }
+
+    .block {
+      opacity: 0;
+      transform: translateY(90px);
+      transition: opacity 1.2s cubic-bezier(.2,.6,.2,1), transform 1.2s cubic-bezier(.2,.6,.2,1);
+    }
+
+    .block.visible { opacity: 1; transform: translateY(0); }
+
+    h2 {
+      font-size: 2.3rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      letter-spacing: -0.03em;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #d1d1d1;
+      max-width: 780px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2.5rem;
+      margin-top: 4rem;
+    }
+
+    .card {
+      padding: 2rem;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #0a0a0a, #050505);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: #2c2c2c;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.7rem;
+      font-weight: 500;
+    }
+
+    .cta {
+      margin-top: 3rem;
+    }
+
+    .cta a {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: var(--fg);
+      color: #020202;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cta a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(255,255,255,0.08);
+    }
+
+    .link {
+      color: var(--fg);
+      text-decoration: none;
+      border-bottom: 1px solid #2b2b2b;
+      padding-bottom: 2px;
+    }
+
+    footer {
+      padding: 4rem 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+
+    @keyframes intro {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<header>
+  <div>
+    <h1>backdoor</h1>
+    <div class="subtitle">Security through understanding</div>
+
+    <div class="terminal">
+      <div class="terminal-header">root@backdoor:~</div>
+      <div class="terminal-scan"></div>
+      <pre class="terminal-body"><span class="cmd"># cat backdoor.dat</span>
+
+[OPENING FILE...]
+[READ MODE: TEXT]
+
+────────────────────────────────
+backdoor.dat
+────────────────────────────────
+
+Backdoor control is an illusion.
+
+You are not in control.
+You are inside the system.
+
+The system decides what is allowed.
+Understanding decides what is possible.
+
+────────────────────────────────
+EOF
+
+<span class="cmd"># _</span></pre>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="block">
+    <h2>The idea</h2>
+    <p>
+      Backdoor is for people who want to understand systems instead of worshipping tools.
+      It is about thinking clearly, breaking carefully, and learning from reality rather than myths.
+    </p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="block">
+    <h2>What happens here</h2>
+    <p>
+      The project brings together people interested in penetration testing, programming,
+      and infrastructure. Beginners learn how things actually work. Experienced members
+      sharpen their thinking by explaining, debating, and testing assumptions.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Pentesting mindset</h3>
+        <p>Methodology, threat modeling, and reasoning before exploitation.</p>
+      </div>
+      <div class="card">
+        <h3>Engineering depth</h3>
+        <p>Operating systems, networks, and code beyond surface-level tutorials.</p>
+      </div>
+      <div class="card">
+        <h3>Ethics and responsibility</h3>
+        <p>Understanding where curiosity ends and responsibility begins.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="block">
+    <h2>Open access</h2>
+    <p>
+      Backdoor is open to those who respect learning and ethics.
+      No ranks, no posturing — just people trying to understand complex systems.
+    </p>
+
+    <div class="cta">
+      <a href="https://discord.gg/back-door" target="_blank">Enter the Discord</a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="block">
+    <h2>Creator</h2>
+    <p>
+      The project is initiated by an independent researcher and grows through the community.
+    </p>
+    <p style="margin-top:1.8rem;">
+      <a class="link" href="https://github.com/necouncil" target="_blank">github.com/necouncil</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  © backdoor — learn how systems fail
+</footer>
+
+<script>
+  const blocks = document.querySelectorAll('.block');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.25 });
+  blocks.forEach(b => observer.observe(b));
+</script>
+
+</body>
+</html>
