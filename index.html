@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Access Node</title>
+  <title>WELCOME</title>
   <style>
     body {
       margin: 0;
@@ -20,8 +20,8 @@
       max-width: 600px;
     }
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
       color: #ff4f4f;
       letter-spacing: 1px;
     }
@@ -30,57 +30,34 @@
       line-height: 1.5;
       margin-bottom: 2rem;
     }
-    .discord-btn {
-      display: inline-block;
-      padding: 0.8rem 1.5rem;
-      font-size: 1.1rem;
+    a {
+      color: #7289da;
       font-weight: bold;
-      color: #000;
-      background-color: #7289da;
-      border: none;
-      border-radius: 5px;
       text-decoration: none;
-      transition: transform 0.2s, background 0.3s;
     }
-    .discord-btn:hover {
-      background-color: #5b6eae;
-      transform: scale(1.05);
-    }
-    #enter-btn {
-      display: block;
-      margin: 2rem auto 0;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      background-color: #ff4f4f;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      color: #000;
-      transition: transform 0.2s, background 0.3s;
-    }
-    #enter-btn:hover {
-      transform: scale(1.05);
-      background-color: #cc3f3f;
+    a:hover {
+      color: #5b6eae;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>ACCESS NODE</h1>
+    <h1>WELCOME</h1>
     <p>Exploring the edges of cybersecurity and digital systems. Focused on knowledge, challenges, and the art of understanding complex networks.</p>
-    <a href="https://discord.gg/RxfCJqgcMK" class="discord-btn" target="_blank">Join Discord</a>
-    <button id="enter-btn">Play Music</button>
+    <a href="https://discord.gg/RxfCJqgcMK" target="_blank">Join Discord</a>
   </div>
-  <audio id="bg-music" loop>
+
+  <audio id="bg-music" autoplay loop>
     <source src="track.mp3" type="audio/mpeg">
   </audio>
+
   <script>
-    const btn = document.getElementById('enter-btn');
     const music = document.getElementById('bg-music');
-    btn.addEventListener('click', () => {
-      music.volume = 0.3;
-      music.play();
+    music.volume = 0.3;
+    music.play().catch(() => {
+      // если браузер блокирует autoplay, включаем при первом взаимодействии
+      document.body.addEventListener('click', () => music.play(), { once: true });
+      document.body.addEventListener('keydown', () => music.play(), { once: true });
     });
   </script>
 </body>
