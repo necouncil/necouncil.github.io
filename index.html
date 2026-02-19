@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>ACCESS NODE</title>
+<title>NODE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 html, body {
   margin: 0;
   padding: 0;
-  background: #000;
-  color: #b30000;
-  font-family: "Courier New", monospace;
+  background-color: #050505;
+  color: #b5b5b5;
+  font-family: Consolas, "Courier New", monospace;
   height: 100%;
 }
 
@@ -22,75 +22,78 @@ body {
 }
 
 .container {
-  border: 1px solid #300;
-  padding: 30px;
-  max-width: 700px;
-  width: 90%;
-  box-shadow: 0 0 25px rgba(179,0,0,0.4);
+  width: 640px;
+  max-width: 92%;
+  padding: 36px;
+  border: 1px solid #1a1a1a;
+  background-color: #070707;
 }
 
 h1 {
-  text-align: center;
-  font-size: 2.5rem;
-  letter-spacing: 4px;
-  animation: flicker 2.5s infinite;
+  font-size: 2.4rem;
+  font-weight: normal;
+  letter-spacing: 5px;
+  margin: 0 0 28px 0;
+  color: #d0d0d0;
 }
 
-.warning {
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 20px;
+.description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #9a9a9a;
+  margin-bottom: 34px;
 }
 
-.separator {
-  border-top: 1px dashed #400;
-  margin: 20px 0;
+.divider {
+  border-top: 1px solid #151515;
+  margin: 28px 0;
 }
 
-.buttons {
+.actions {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
 }
 
 button {
-  background: #050505;
-  color: #b30000;
-  border: 1px solid #400;
-  padding: 14px;
+  background: #0a0a0a;
+  color: #b0b0b0;
+  border: 1px solid #222;
+  padding: 14px 16px;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 button:hover {
-  background: #100;
-  box-shadow: 0 0 10px #600;
+  background: #101010;
+  border-color: #2e2e2e;
+}
+
+.meta {
+  margin-top: 30px;
+  font-size: 0.75rem;
+  color: #5f5f5f;
 }
 
 .session {
-  color: #777;
-  font-size: 0.85rem;
+  margin-top: 6px;
   word-break: break-all;
   user-select: all;
 }
 
-.footer {
-  margin-top: 20px;
-  font-size: 0.75rem;
-  color: #444;
-  text-align: center;
+@keyframes subtleNoise {
+  0% { opacity: 1; }
+  98% { opacity: 1; }
+  99% { opacity: 0.85; }
+  100% { opacity: 1; }
 }
 
-@keyframes flicker {
-  0% { opacity: 1; }
-  5% { opacity: 0.4; }
-  10% { opacity: 1; }
-  15% { opacity: 0.2; }
-  20% { opacity: 1; }
-  100% { opacity: 1; }
+.container {
+  animation: subtleNoise 7s infinite;
 }
 </style>
 </head>
@@ -98,40 +101,36 @@ button:hover {
 <body>
 
 <div class="container">
-  <h1>RESTRICTED NODE</h1>
+  <h1>NODE</h1>
 
-  <div class="warning">
-    Unauthorized access is logged.<br>
-    Behavior analysis enabled.<br>
-    You are not anonymous.
+  <div class="description">
+    Exploring the edges of cybersecurity and digital systems.
+    Focused on knowledge, challenges, and the art of understanding complex networks.
   </div>
 
-  <div class="separator"></div>
+  <div class="divider"></div>
 
-  <div class="buttons">
+  <div class="actions">
     <button onclick="window.open('https://discord.gg/VwEEQDUE2N')">
-      CONNECT :: DISCORD
+      discord
     </button>
 
     <button onclick="window.open('https://github.com/necouncil')">
-      ACCESS :: GITHUB REPO
+      github
     </button>
 
     <button onclick="window.open('https://www.tiktok.com/@dip1omat')">
-      OBSERVE :: TIKTOK CHANNEL
+      tiktok
     </button>
   </div>
 
-  <div class="separator"></div>
+  <div class="divider"></div>
 
-  <div class="session">
-    SESSION ID:<br>
-    05ec57ce82b2b3694ea735c6f4dd71281c8eebcdd5bd73d05393d0da77c9a9cf25
-  </div>
-
-  <div class="footer">
-    NODE STATUS: ONLINE<br>
-    TRACE ROUTE: ENABLED
+  <div class="meta">
+    session
+    <div class="session">
+      05ec57ce82b2b3694ea735c6f4dd71281c8eebcdd5bd73d05393d0da77c9a9cf25
+    </div>
   </div>
 </div>
 
@@ -141,7 +140,7 @@ button:hover {
 
 <script>
 const music = document.getElementById("bg-music");
-music.volume = 0.25;
+music.volume = 0.18;
 music.play().catch(() => {
   document.body.addEventListener("click", () => music.play(), { once: true });
 });
