@@ -30,21 +30,64 @@
       line-height: 1.5;
       margin-bottom: 2rem;
     }
+    .socials {
+      margin-top: 2rem;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    .socials div {
+      margin-bottom: 0.5rem;
+    }
+    .label {
+      color: #888;
+    }
     a {
       color: #7289da;
-      font-weight: bold;
       text-decoration: none;
+      font-weight: bold;
     }
     a:hover {
       color: #5b6eae;
+    }
+    .session {
+      color: #aaa;
+      word-break: break-all;
+      user-select: all;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>WELCOME</h1>
-    <p>Exploring the edges of cybersecurity and digital systems. Focused on knowledge, challenges, and the art of understanding complex networks.</p>
-    <a href="https://discord.gg/RxfCJqgcMK" target="_blank">Join Discord</a>
+
+    <p>
+      Exploring the edges of cybersecurity and digital systems.
+      Focused on knowledge, challenges, and the art of understanding complex networks.
+    </p>
+
+    <div class="socials">
+      <div>
+        <span class="label">Session:</span><br>
+        <span class="session">
+          05ec57ce82b2b3694ea735c6f4dd71281c8eebcdd5bd73d05393d0da77c9a9cf25
+        </span>
+      </div>
+
+      <div>
+        <span class="label">Discord:</span>
+        <a href="https://discord.gg/VwEEQDUE2N" target="_blank">discord.gg/VwEEQDUE2N</a>
+      </div>
+
+      <div>
+        <span class="label">GitHub:</span>
+        <a href="https://github.com/necouncil" target="_blank">github.com/necouncil</a>
+      </div>
+
+      <div>
+        <span class="label">TikTok:</span>
+        <a href="https://www.tiktok.com/@dip1omat" target="_blank">@dip1omat</a>
+      </div>
+    </div>
   </div>
 
   <audio id="bg-music" autoplay loop>
@@ -55,7 +98,6 @@
     const music = document.getElementById('bg-music');
     music.volume = 0.3;
     music.play().catch(() => {
-      // если браузер блокирует autoplay, включаем при первом взаимодействии
       document.body.addEventListener('click', () => music.play(), { once: true });
       document.body.addEventListener('keydown', () => music.play(), { once: true });
     });
