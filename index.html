@@ -1,106 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WELCOME</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: #000;
-      font-family: monospace;
-      color: #ccc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .container {
-      max-width: 600px;
-    }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 1.5rem;
-      color: #ff4f4f;
-      letter-spacing: 1px;
-    }
-    p {
-      font-size: 1.2rem;
-      line-height: 1.5;
-      margin-bottom: 2rem;
-    }
-    .socials {
-      margin-top: 2rem;
-      text-align: left;
-      font-size: 0.95rem;
-    }
-    .socials div {
-      margin-bottom: 0.5rem;
-    }
-    .label {
-      color: #888;
-    }
-    a {
-      color: #7289da;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover {
-      color: #5b6eae;
-    }
-    .session {
-      color: #aaa;
-      word-break: break-all;
-      user-select: all;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>ACCESS NODE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #b30000;
+  font-family: "Courier New", monospace;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  border: 1px solid #300;
+  padding: 30px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 0 25px rgba(179,0,0,0.4);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  letter-spacing: 4px;
+  animation: flicker 2.5s infinite;
+}
+
+.warning {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.separator {
+  border-top: 1px dashed #400;
+  margin: 20px 0;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+button {
+  background: #050505;
+  color: #b30000;
+  border: 1px solid #400;
+  padding: 14px;
+  font-family: inherit;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: #100;
+  box-shadow: 0 0 10px #600;
+}
+
+.session {
+  color: #777;
+  font-size: 0.85rem;
+  word-break: break-all;
+  user-select: all;
+}
+
+.footer {
+  margin-top: 20px;
+  font-size: 0.75rem;
+  color: #444;
+  text-align: center;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  5% { opacity: 0.4; }
+  10% { opacity: 1; }
+  15% { opacity: 0.2; }
+  20% { opacity: 1; }
+  100% { opacity: 1; }
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>WELCOME</h1>
 
-    <p>
-      Exploring the edges of cybersecurity and digital systems.
-      Focused on knowledge, challenges, and the art of understanding complex networks.
-    </p>
+<div class="container">
+  <h1>RESTRICTED NODE</h1>
 
-    <div class="socials">
-      <div>
-        <span class="label">Session:</span><br>
-        <span class="session">
-          05ec57ce82b2b3694ea735c6f4dd71281c8eebcdd5bd73d05393d0da77c9a9cf25
-        </span>
-      </div>
-
-      <div>
-        <span class="label">Discord:</span>
-        <a href="https://discord.gg/VwEEQDUE2N" target="_blank">discord.gg/VwEEQDUE2N</a>
-      </div>
-
-      <div>
-        <span class="label">GitHub:</span>
-        <a href="https://github.com/necouncil" target="_blank">github.com/necouncil</a>
-      </div>
-
-      <div>
-        <span class="label">TikTok:</span>
-        <a href="https://www.tiktok.com/@dip1omat" target="_blank">@dip1omat</a>
-      </div>
-    </div>
+  <div class="warning">
+    Unauthorized access is logged.<br>
+    Behavior analysis enabled.<br>
+    You are not anonymous.
   </div>
 
-  <audio id="bg-music" autoplay loop>
-    <source src="track.mp3" type="audio/mpeg">
-  </audio>
+  <div class="separator"></div>
 
-  <script>
-    const music = document.getElementById('bg-music');
-    music.volume = 0.3;
-    music.play().catch(() => {
-      document.body.addEventListener('click', () => music.play(), { once: true });
-      document.body.addEventListener('keydown', () => music.play(), { once: true });
-    });
-  </script>
+  <div class="buttons">
+    <button onclick="window.open('https://discord.gg/VwEEQDUE2N')">
+      CONNECT :: DISCORD
+    </button>
+
+    <button onclick="window.open('https://github.com/necouncil')">
+      ACCESS :: GITHUB REPO
+    </button>
+
+    <button onclick="window.open('https://www.tiktok.com/@dip1omat')">
+      OBSERVE :: TIKTOK CHANNEL
+    </button>
+  </div>
+
+  <div class="separator"></div>
+
+  <div class="session">
+    SESSION ID:<br>
+    05ec57ce82b2b3694ea735c6f4dd71281c8eebcdd5bd73d05393d0da77c9a9cf25
+  </div>
+
+  <div class="footer">
+    NODE STATUS: ONLINE<br>
+    TRACE ROUTE: ENABLED
+  </div>
+</div>
+
+<audio id="bg-music" autoplay loop>
+  <source src="track.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("bg-music");
+music.volume = 0.25;
+music.play().catch(() => {
+  document.body.addEventListener("click", () => music.play(), { once: true });
+});
+</script>
+
 </body>
 </html>
