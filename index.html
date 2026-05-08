@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -17,59 +17,56 @@
       box-sizing:border-box;
     }
 
+    :root{
+      --bg:#040404;
+      --card:rgba(255,255,255,0.025);
+      --border:rgba(255,255,255,0.05);
+      --text:#f5f5f5;
+      --muted:#6d6d6d;
+    }
+
     body{
-      background:#050505;
-      color:white;
+      background:var(--bg);
+      color:var(--text);
       font-family:'Inter',sans-serif;
       min-height:100vh;
       overflow-x:hidden;
       display:flex;
       justify-content:center;
-      padding:80px 20px;
+      padding:70px 20px;
       position:relative;
     }
 
     body::before{
       content:"";
       position:fixed;
-      width:500px;
-      height:500px;
-      background:radial-gradient(circle,rgba(255,255,255,0.06),transparent 70%);
-      top:-200px;
-      right:-100px;
+      inset:0;
+      background:
+      radial-gradient(circle at top right, rgba(255,255,255,0.05), transparent 35%),
+      radial-gradient(circle at bottom left, rgba(255,255,255,0.03), transparent 35%);
       pointer-events:none;
-      animation:float 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes float{
-      from{
-        transform:translateY(0px);
-      }
-      to{
-        transform:translateY(40px);
-      }
     }
 
     .container{
       width:100%;
-      max-width:500px;
+      max-width:480px;
       position:relative;
       z-index:2;
     }
 
     .title{
-      font-size:42px;
+      font-size:40px;
       font-weight:600;
       letter-spacing:-2px;
-      margin-bottom:40px;
+      margin-bottom:32px;
       opacity:0;
-      animation:fadeDown 1s forwards;
+      animation:title 1s forwards;
     }
 
-    @keyframes fadeDown{
+    @keyframes title{
       from{
         opacity:0;
-        transform:translateY(-20px);
+        transform:translateY(-15px);
       }
       to{
         opacity:1;
@@ -80,35 +77,49 @@
     .defs{
       display:flex;
       flex-direction:column;
-      gap:12px;
+      gap:10px;
     }
 
     .def{
-      background:rgba(255,255,255,0.03);
-      border:1px solid rgba(255,255,255,0.06);
-      border-radius:16px;
-      padding:16px 18px;
-      font-size:15px;
-      color:#d4d4d4;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:15px 18px;
+      font-size:14px;
+      color:#cfcfcf;
       backdrop-filter:blur(10px);
-
       opacity:0;
-      transform:translateY(15px);
-
-      animation:appear .5s forwards;
+      transform:translateY(12px);
+      animation:appear .45s forwards;
       transition:.25s ease;
-      cursor:default;
     }
 
     .def:hover{
-      transform:translateY(-3px);
+      transform:translateY(-2px);
       border-color:rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.05);
+      background:rgba(255,255,255,0.04);
       color:white;
+      box-shadow:0 0 25px rgba(255,255,255,0.03);
+    }
 
-      box-shadow:
-        0 0 20px rgba(255,255,255,0.03),
-        0 10px 30px rgba(0,0,0,0.4);
+    .red{
+      color:#ff7b7b;
+    }
+
+    .blue{
+      color:#8ab4ff;
+    }
+
+    .purple{
+      color:#c79cff;
+    }
+
+    .green{
+      color:#8fffba;
+    }
+
+    .gold{
+      color:#ffd37b;
     }
 
     @keyframes appear{
@@ -118,24 +129,46 @@
       }
     }
 
+    .bottom{
+      margin-top:32px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:center;
+    }
+
     .footer{
-      margin-top:40px;
-      color:#5e5e5e;
+      color:var(--muted);
       font-size:12px;
       text-align:center;
     }
 
-    @media(max-width:600px){
+    .discord{
+      text-decoration:none;
+      color:#d7d7d7;
+      font-size:13px;
+      padding:12px 18px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      transition:.25s ease;
+    }
 
+    .discord:hover{
+      background:rgba(255,255,255,0.05);
+      border-color:rgba(255,255,255,0.12);
+      color:white;
+      transform:translateY(-2px);
+    }
+
+    @media(max-width:600px){
       .title{
         font-size:34px;
       }
 
       .def{
-        font-size:14px;
-        padding:14px 16px;
+        font-size:13px;
       }
-
     }
 
   </style>
@@ -150,114 +183,118 @@
 
     <div class="defs">
 
-      <div class="def" style="animation-delay:0.1s">
+      <div class="def red" style="animation-delay:0.1s">
         XpatchShow
       </div>
 
-      <div class="def" style="animation-delay:0.2s">
+      <div class="def blue" style="animation-delay:0.15s">
         n372unner
       </div>
 
-      <div class="def" style="animation-delay:0.3s">
+      <div class="def purple" style="animation-delay:0.2s">
         diplomat
       </div>
 
-      <div class="def" style="animation-delay:0.4s">
+      <div class="def green" style="animation-delay:0.25s">
         Pitko
       </div>
 
-      <div class="def" style="animation-delay:0.5s">
+      <div class="def gold" style="animation-delay:0.3s">
         「GS」AID
       </div>
 
-      <div class="def" style="animation-delay:0.6s">
+      <div class="def blue" style="animation-delay:0.35s">
         「GS」Ликвид
       </div>
 
-      <div class="def" style="animation-delay:0.7s">
+      <div class="def red" style="animation-delay:0.4s">
         фффффф
       </div>
 
-      <div class="def" style="animation-delay:0.8s">
-        Mirochka <3
+      <div class="def purple" style="animation-delay:0.45s">
+        Mirochka &lt;3
       </div>
 
-      <div class="def" style="animation-delay:0.9s">
+      <div class="def green" style="animation-delay:0.5s">
         black kent
       </div>
 
-      <div class="def" style="animation-delay:1.0s">
+      <div class="def gold" style="animation-delay:0.55s">
         Архистратигов
       </div>
 
-      <div class="def" style="animation-delay:1.1s">
+      <div class="def blue" style="animation-delay:0.6s">
         KM777
       </div>
 
-      <div class="def" style="animation-delay:1.2s">
+      <div class="def purple" style="animation-delay:0.65s">
         dowogernut
       </div>
 
-      <div class="def" style="animation-delay:1.3s">
+      <div class="def green" style="animation-delay:0.7s">
         MorozFir
       </div>
 
-      <div class="def" style="animation-delay:1.4s">
+      <div class="def red" style="animation-delay:0.75s">
         укупник
       </div>
 
-      <div class="def" style="animation-delay:1.5s">
-        black kent
-      </div>
-
-      <div class="def" style="animation-delay:1.6s">
+      <div class="def blue" style="animation-delay:0.8s">
         РосАтом
       </div>
 
-      <div class="def" style="animation-delay:1.7s">
+      <div class="def purple" style="animation-delay:0.85s">
         lilith
       </div>
 
-      <div class="def" style="animation-delay:1.8s">
+      <div class="def gold" style="animation-delay:0.9s">
         「GS」Recrut
       </div>
 
-      <div class="def" style="animation-delay:1.9s">
+      <div class="def green" style="animation-delay:0.95s">
         fx
       </div>
 
-      <div class="def" style="animation-delay:2.0s">
+      <div class="def red" style="animation-delay:1s">
         Хаскарь
       </div>
 
-      <div class="def" style="animation-delay:2.1s">
+      <div class="def blue" style="animation-delay:1.05s">
         SHARKHAN
       </div>
 
-      <div class="def" style="animation-delay:2.2s">
+      <div class="def purple" style="animation-delay:1.1s">
         Emiz
       </div>
 
-      <div class="def" style="animation-delay:2.3s">
+      <div class="def green" style="animation-delay:1.15s">
         nuar
       </div>
 
-      <div class="def" style="animation-delay:2.4s">
+      <div class="def gold" style="animation-delay:1.2s">
         Mantra
       </div>
 
-      <div class="def" style="animation-delay:2.5s">
+      <div class="def blue" style="animation-delay:1.25s">
         Annapurna
       </div>
 
-      <div class="def" style="animation-delay:2.6s">
+      <div class="def purple" style="animation-delay:1.3s">
         tendeseries
       </div>
 
     </div>
 
-    <div class="footer">
-      Список создан и Разрабатывается сервером BackDoor
+    <div class="bottom">
+
+      <a href="https://discord.gg/backdoor-1404439707118731375" class="discord" target="_blank">
+        Discord Server
+      </a>
+
+      <div class="footer">
+        BackDoor
+      </div>
+
     </div>
 
   </div>
