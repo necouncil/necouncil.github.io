@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Defs</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background:#050505;
+      color:white;
+      font-family:'Inter',sans-serif;
+      min-height:100vh;
+      overflow-x:hidden;
+      display:flex;
+      justify-content:center;
+      padding:80px 20px;
+      position:relative;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle,rgba(255,255,255,0.06),transparent 70%);
+      top:-200px;
+      right:-100px;
+      pointer-events:none;
+      animation:float 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes float{
+      from{
+        transform:translateY(0px);
+      }
+      to{
+        transform:translateY(40px);
+      }
+    }
+
+    .container{
+      width:100%;
+      max-width:500px;
+      position:relative;
+      z-index:2;
+    }
+
+    .title{
+      font-size:42px;
+      font-weight:600;
+      letter-spacing:-2px;
+      margin-bottom:40px;
+      opacity:0;
+      animation:fadeDown 1s forwards;
+    }
+
+    @keyframes fadeDown{
+      from{
+        opacity:0;
+        transform:translateY(-20px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .defs{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .def{
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:16px;
+      padding:16px 18px;
+      font-size:15px;
+      color:#d4d4d4;
+      backdrop-filter:blur(10px);
+
+      opacity:0;
+      transform:translateY(15px);
+
+      animation:appear .5s forwards;
+      transition:.25s ease;
+      cursor:default;
+    }
+
+    .def:hover{
+      transform:translateY(-3px);
+      border-color:rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.05);
+      color:white;
+
+      box-shadow:
+        0 0 20px rgba(255,255,255,0.03),
+        0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    @keyframes appear{
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .footer{
+      margin-top:40px;
+      color:#5e5e5e;
+      font-size:12px;
+      text-align:center;
+    }
+
+    @media(max-width:600px){
+
+      .title{
+        font-size:34px;
+      }
+
+      .def{
+        font-size:14px;
+        padding:14px 16px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="title">
+      My Defs
+    </div>
+
+    <div class="defs">
+
+      <div class="def" style="animation-delay:0.1s">
+        toxa1337
+      </div>
+
+      <div class="def" style="animation-delay:0.2s">
+        ghost.exe
+      </div>
+
+      <div class="def" style="animation-delay:0.3s">
+        rxven
+      </div>
+
+      <div class="def" style="animation-delay:0.4s">
+        nulluser
+      </div>
+
+      <div class="def" style="animation-delay:0.5s">
+        overheat
+      </div>
+
+      <div class="def" style="animation-delay:0.6s">
+        deadpacket
+      </div>
+
+    </div>
+
+    <div class="footer">
+      github pages
+    </div>
+
+  </div>
+
+</body>
+</html>
